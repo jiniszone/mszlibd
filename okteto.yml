@@ -1,6 +1,9 @@
+version: "1.3"
+
 services:
-  mooncake:
+  app:
     build: .
-    shm_size: 2.6gb
+    command: bash start.sh
+    restart: on-failure
     ports:
       - "80:80"
