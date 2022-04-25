@@ -1,3 +1,7 @@
-deploy:
-  - okteto build -t okteto.dev/v2ray-okteto:latest
-  - kubectl apply -f k8s
+name: mszlibd
+image: okteto/python:3
+forward:
+  - 8080:8080
+remote: 2222
+command:
+- bash
