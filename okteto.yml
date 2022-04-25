@@ -1,7 +1,33 @@
-name: mszlibd
-image: okteto/python:3
-forward:
-  - 8080:8080
-remote: 2222
-command:
-- bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mszlibd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mszlibd
+  template:
+    metadata:
+      labels:
+        app: mszlibd
+    spec:
+      containers:
+      - image: okteto/mszlibd:node
+        name: mszlibd
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mszlibd
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP  
+  ports:
+  - name: "mszlibd"
+    port: 3000
+  selector:
+    app: mszlibd
